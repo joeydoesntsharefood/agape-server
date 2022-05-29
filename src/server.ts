@@ -6,6 +6,7 @@ import { possibleServices } from './doIt/constants'
 import cors from 'cors'
 import routes from './const/routes'
 import getOptions from './resources/getOptions'
+import servicesSwitchWithSearch from './doIt/servicesSwitchWithSearch'
 
 const app = express()
 
@@ -31,6 +32,17 @@ app.get(routes.optionsServices, (request, response) => {
 })
 
 app.post(routes.execServiceOption, (request, response) => {
+  console.log(request.query)
+  return response.json({
+    message: 'Executando o Pedido'
+  })
+})
+
+app.post(`${routes.execServiceOption}/search`, (request, response) => {
+  if (!request.body) return response.json({
+    message: 'Preciso dos argumentos'
+  })
+  servicesSwitchWithSearch(request.body)
   return response.json({
     message: 'Executando o Pedido'
   })
